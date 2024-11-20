@@ -36,6 +36,8 @@ INSTALLED_APPS = [
 
     "users",
     "learns",
+    "rest_framework",
+
 ]
 
 MIDDLEWARE = [

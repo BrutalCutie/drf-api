@@ -34,12 +34,14 @@ class Payment(models.Model):
                                     auto_now_add=True)
     course = models.ForeignKey(Course,
                                on_delete=models.CASCADE,
-                               related_name='payment_courses')
+                               related_name='payment_courses',
+                               null=True, blank=True)
     lesson = models.ForeignKey(Lesson,
                                on_delete=models.CASCADE,
-                               related_name='payment_lessons')
+                               related_name='payment_lessons',
+                               null=True, blank=True)
     payment_sum = models.PositiveIntegerField(verbose_name="Сумма оплаты")
-    payment_method = models.CharField(choices=PAYMENT_METHOD_CHOICES)
+    payment_method = models.CharField(choices=PAYMENT_METHOD_CHOICES, verbose_name="Метод оплаты")
 
     def __str__(self):
         return f"pk: {self.pk} | user pk: {self.user.pk}"

@@ -7,6 +7,7 @@ from .models import User, Payment
 from .serializers import UserSerializer, PaymentSerializer, UserDetailSerializer
 
 
+
 class UserViewSet(viewsets.ModelViewSet):
     serializer_class = UserSerializer
     queryset = User.objects.all()

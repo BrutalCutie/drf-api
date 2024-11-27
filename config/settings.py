@@ -10,6 +10,7 @@ For the full list of settings and their values, see
 https://docs.djangoproject.com/en/5.1/ref/settings/
 """
 import os
+from datetime import timedelta
 from pathlib import Path
 from dotenv import load_dotenv
 
@@ -37,9 +38,23 @@ INSTALLED_APPS = [
     "users",
     "learns",
     "rest_framework",
+    "rest_framework_simplejwt",
     "django_filters",
-
 ]
+
+REST_FRAMEWORK = {
+    'DEFAULT_AUTHENTICATION_CLASSES': [
+        'rest_framework_simplejwt.authentication.JWTAuthentication',
+    ],
+    'DEFAULT_PERMISSION_CLASSES': [
+        'rest_framework.permissions.IsAuthenticated',
+    ]
+}
+
+SIMPLE_JWT = {
+    'ACCESS_TOKEN_LIFETIME': timedelta(minutes=60),
+    'REFRESH_TOKEN_LIFETIME': timedelta(days=1),
+}
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
@@ -117,3 +132,4 @@ MEDIA_URL = "/media/"  # Обязательные слеши в начале и 
 MEDIA_ROOT = os.path.join(BASE_DIR, MEDIA_URL[1:-1])  # Передача папки без слешей
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+

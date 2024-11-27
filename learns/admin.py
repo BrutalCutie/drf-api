@@ -1,3 +1,13 @@
 from django.contrib import admin
 
-# Register your models here.
+from learns.models import Lesson, Course
+
+
+@admin.register(Lesson)
+class AdminLesson(admin.ModelAdmin):
+    list_display = ("id", 'title', 'owner__email', 'owner__id')
+
+
+@admin.register(Course)
+class AdminCourse(admin.ModelAdmin):
+    list_display = ("id", 'title', 'owner__email', 'owner__id')

@@ -9,7 +9,7 @@ class Course(models.Model):
     owner = models.ForeignKey(settings.AUTH_USER_MODEL,
                               on_delete=models.CASCADE,
                               related_name='courses',
-                              verbose_name='курсы',
+                              verbose_name='владелец',
                               blank=True,
                               null=True)
 
@@ -30,7 +30,7 @@ class Lesson(models.Model):
     owner = models.ForeignKey(settings.AUTH_USER_MODEL,
                               on_delete=models.CASCADE,
                               related_name='lessons',
-                              verbose_name='уроки',
+                              verbose_name='владелец',
                               blank=True,
                               null=True)
 

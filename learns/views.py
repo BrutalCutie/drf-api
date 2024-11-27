@@ -24,6 +24,8 @@ class CourseViewSet(viewsets.ModelViewSet):
             self.permission_classes = [~IsModer, IsOwner]
         elif self.action in ['create']:
             self.permission_classes = [~IsModer]
+        elif self.action in ['list']:
+            self.permission_classes = [IsModer]
 
         return super().get_permissions()
 
@@ -46,6 +48,8 @@ class LessonViewSet(viewsets.ModelViewSet):
             self.permission_classes = [~IsModer, IsOwner]
         elif self.action in ['create']:
             self.permission_classes = [~IsModer]
+        elif self.action in ['list']:
+            self.permission_classes = [IsModer]
 
         return super().get_permissions()
 

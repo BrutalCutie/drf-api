@@ -1,15 +1,23 @@
 [
 {
+    "model": "auth.group",
+    "pk": 1,
+    "fields": {
+        "name": "moders",
+        "permissions": []
+    }
+},
+{
     "model": "users.user",
     "pk": 1,
     "fields": {
-        "password": "admin",
+        "password": "pbkdf2_sha256$870000$mwHJBBVeetngU0uy11WiZs$rLZszkNUHBJjHVS6bmvJVGV/sEoKrrQI+NEZlSQdn8k=",
         "last_login": null,
-        "is_superuser": false,
+        "is_superuser": true,
         "username": "admin",
         "first_name": "",
         "last_name": "",
-        "is_staff": false,
+        "is_staff": true,
         "is_active": true,
         "date_joined": "2024-11-19T13:00:15.157Z",
         "email": "admin@admin.ru",
@@ -22,20 +30,64 @@
 },
 {
     "model": "users.user",
-    "pk": 2,
+    "pk": 7,
     "fields": {
-        "password": "admin",
+        "password": "pbkdf2_sha256$870000$YGT6Ue9xmsoClPaz3q9sOa$+E3F0qn2UuRNhEDFN9w96dNJiO0Z11l6tqMDToQf+AE=",
+        "last_login": null,
+        "is_superuser": false,
+        "username": "moder1",
+        "first_name": "",
+        "last_name": "",
+        "is_staff": false,
+        "is_active": true,
+        "date_joined": "2024-11-26T10:06:45Z",
+        "email": "moder1@mail.ru",
+        "phone": "+37255901554",
+        "city": "Tallinn",
+        "avatar": "",
+        "groups": [
+            1
+        ],
+        "user_permissions": []
+    }
+},
+{
+    "model": "users.user",
+    "pk": 8,
+    "fields": {
+        "password": "pbkdf2_sha256$870000$9xByUohuJz5NTnQNsDRRAt$z1mGAHIO3jzui9VGY5oXHAzzuwIvKrzxWHhe2DmTT1c=",
         "last_login": null,
         "is_superuser": false,
         "username": "user1",
-        "first_name": "name1",
-        "last_name": "last1",
+        "first_name": "",
+        "last_name": "",
         "is_staff": false,
-        "is_active": false,
-        "date_joined": "2024-11-23T05:03:34.720Z",
-        "email": "BrutalCutie@yandex.ru",
-        "phone": "89810155206",
-        "city": "Ufa",
+        "is_active": true,
+        "date_joined": "2024-11-26T14:03:13Z",
+        "email": "user1@mail.ru",
+        "phone": "+37255901554",
+        "city": "Tallinn",
+        "avatar": "",
+        "groups": [],
+        "user_permissions": []
+    }
+},
+{
+    "model": "users.user",
+    "pk": 9,
+    "fields": {
+        "password": "pbkdf2_sha256$870000$pwuCoeuDaQbZOeOZU9iJGy$8XfuFONC15HD6VvwTt8FY1HTaxqXvdU3P8BjlRxtKYA=",
+        "last_login": null,
+        "is_superuser": false,
+        "username": "user2",
+        "first_name": "",
+        "last_name": "",
+        "is_staff": false,
+        "is_active": true,
+        "date_joined": "2024-11-27T04:04:59.428Z",
+        "email": "user2@mail.ru",
+        "phone": "+3725555555",
+        "city": "Tallinn",
         "avatar": "",
         "groups": [],
         "user_permissions": []
@@ -66,24 +118,13 @@
     }
 },
 {
-    "model": "users.payment",
-    "pk": 3,
-    "fields": {
-        "user": 2,
-        "payment_date": "2024-11-23",
-        "course": 4,
-        "lesson": null,
-        "payment_sum": 500000,
-        "payment_method": "CASH"
-    }
-},
-{
     "model": "learns.course",
     "pk": 2,
     "fields": {
         "title": "ООП Python",
         "preview": "",
-        "description": "Курс об объектно ориентированном программировании"
+        "description": "Курс об объектно ориентированном программировании",
+        "owner": 8
     }
 },
 {
@@ -92,7 +133,8 @@
     "fields": {
         "title": "SQL база данных",
         "preview": "",
-        "description": "Курс для ознакомления с базами данных "
+        "description": "Курс для ознакомления с базами данных",
+        "owner": 9
     }
 },
 {
@@ -101,7 +143,8 @@
     "fields": {
         "title": "Основы django",
         "preview": "",
-        "description": "Первый шаг на дороге к web-приложениям"
+        "description": "Первый шаг на дороге к web-приложениям",
+        "owner": 8
     }
 },
 {
@@ -112,7 +155,8 @@
         "description": "В этом видео вы узнаете как зародилась идея ООП",
         "preview": "",
         "video_link": "http://promovid.net/oop-vid",
-        "course": 2
+        "course": 2,
+        "owner": 8
     }
 },
 {
@@ -123,7 +167,8 @@
         "description": "Вы ещё ближе познакомитесь с классами",
         "preview": "",
         "video_link": "http://promovid.net/oop-incapsulation",
-        "course": 2
+        "course": 2,
+        "owner": 8
     }
 },
 {
@@ -134,7 +179,8 @@
         "description": "Узнаете о наследовании классов",
         "preview": "",
         "video_link": "http://promovid.net/oop-nasledovanie",
-        "course": 2
+        "course": 2,
+        "owner": 8
     }
 },
 {
@@ -145,7 +191,8 @@
         "description": "Узнаете о базовых запросах на языке SQL",
         "preview": "",
         "video_link": "http://promovid.net/sql-basics",
-        "course": 3
+        "course": 3,
+        "owner": 9
     }
 },
 {
@@ -156,7 +203,8 @@
         "description": "Узнаете о продвинутых запросах на языке SQL",
         "preview": "",
         "video_link": "http://promovid.net/sql-mid",
-        "course": 3
+        "course": 3,
+        "owner": 9
     }
 },
 {
@@ -167,7 +215,8 @@
         "description": "Узнаете о запросах фильтрации на языке SQL",
         "preview": "",
         "video_link": "http://promovid.net/sql-filter",
-        "course": 3
+        "course": 3,
+        "owner": 9
     }
 },
 {
@@ -178,7 +227,8 @@
         "description": "В этом видео вы узнате о базе django",
         "preview": "",
         "video_link": "http://promovid.net/django-basic",
-        "course": 4
+        "course": 4,
+        "owner": 9
     }
 }
 ]

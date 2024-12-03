@@ -8,10 +8,10 @@ class LessonValidator:
         self.field = field
 
     def __call__(self, value):
-        pattern = re.compile(r"yotube\.com")
-        value = dict(value).get(self.field)
+        pattern = re.compile(r"youtube\.com")
+        tmp = dict(value).get(self.field)
 
-        if not bool(pattern.match(value)):
+        if not bool(pattern.search(tmp)):
             raise ValidationError('Вы можете прикреплять видео только с видеохостинга "Youtube"')
 
 

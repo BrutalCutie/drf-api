@@ -11,13 +11,12 @@ class LessonSerializer(serializers.ModelSerializer):
         fields = "__all__"
         validators = [
             LessonValidator(field='video_link'),
-
         ]
 
 
 class CourseSerializer(serializers.ModelSerializer):
     total_lessons = serializers.SerializerMethodField()
-    lessons = LessonSerializer(many=True)
+    lessons = LessonSerializer(many=True, read_only=True)
 
     class Meta:
         model = Course

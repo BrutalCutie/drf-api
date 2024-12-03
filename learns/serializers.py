@@ -1,6 +1,6 @@
 from rest_framework import serializers
 
-from learns.models import Course, Lesson
+from learns.models import Course, Lesson, Subscription
 from learns.validators import LessonValidator
 
 
@@ -27,4 +27,8 @@ class CourseSerializer(serializers.ModelSerializer):
         return instance.lessons.all().count()
 
 
-
+# class SubscriptionSerializer(serializers.ModelSerializer):
+#
+#     class Meta:
+#         model = Subscription
+#         fields = "__all__"

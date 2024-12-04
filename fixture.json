@@ -32,7 +32,7 @@
     "model": "users.user",
     "pk": 7,
     "fields": {
-        "password": "pbkdf2_sha256$870000$YGT6Ue9xmsoClPaz3q9sOa$+E3F0qn2UuRNhEDFN9w96dNJiO0Z11l6tqMDToQf+AE=",
+        "password": "pbkdf2_sha256$870000$E9rCxrcotIrwQT7E0jf6O4$SBW+lbVNHNarEvzgcuPV8/OkOfBtlTERhmXy7vzzKq8=",
         "last_login": null,
         "is_superuser": false,
         "username": "moder1",
@@ -55,7 +55,7 @@
     "model": "users.user",
     "pk": 8,
     "fields": {
-        "password": "pbkdf2_sha256$870000$9xByUohuJz5NTnQNsDRRAt$z1mGAHIO3jzui9VGY5oXHAzzuwIvKrzxWHhe2DmTT1c=",
+        "password": "pbkdf2_sha256$870000$hC4LRPMca1UxTztpdvYwsx$rgiUBiGGJ1L4AebX8akbIy6lp3rPAgLad7NHE/vqqb0=",
         "last_login": null,
         "is_superuser": false,
         "username": "user1",
@@ -167,18 +167,6 @@
         "description": "Вы ещё ближе познакомитесь с классами",
         "preview": "",
         "video_link": "http://promovid.net/oop-incapsulation",
-        "course": 2,
-        "owner": 8
-    }
-},
-{
-    "model": "learns.lesson",
-    "pk": 4,
-    "fields": {
-        "title": "1.3 Наследование",
-        "description": "Узнаете о наследовании классов",
-        "preview": "",
-        "video_link": "http://promovid.net/oop-nasledovanie",
         "course": 2,
         "owner": 8
     }

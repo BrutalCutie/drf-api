@@ -1,10 +1,13 @@
+from django.shortcuts import get_object_or_404
 from rest_framework import viewsets
 from rest_framework import generics
 from rest_framework.permissions import IsAuthenticated, AllowAny
+from rest_framework.response import Response
 
-from learns.models import Course, Lesson
+from learns.models import Course, Lesson, Subscription
 from learns.paginators import LessonPagination, CoursePagination
-from learns.serializers import CourseSerializer, LessonSerializer
+from learns.serializers import CourseSerializer, LessonSerializer, SubscriptionSerializer
+from users.models import User
 
 from users.permissions import IsModer, IsOwner
 
@@ -62,15 +65,49 @@ class LessonViewSet(viewsets.ModelViewSet):
         return super().get_permissions()
 
 
-# class SubscriptionListAPIView(generics.ListAPIView):
-#     serializer_class = SubscriptionSerializer
-#     queryset = Subscription.objects.all()
-#     permission_classes = [AllowAny]
+class SubscriptionListApiView(generics.ListAPIView):
+    serializer_class = SubscriptionSerializer
+    queryset = Subscription.objects.all()
+    permission_classes = [IsAuthenticated]
 
 
-# class SubscriptionSwitchAPIView(generics.CreateAPIView):
-#     serializer_class = SubscriptionSerializer
-#     queryset = Subscription.objects.all()
-#     permission_classes = [AllowAny]
+class SubscriptionCreateApiView(generics.CreateAPIView):
+    serializer_class = SubscriptionSerializer
+    queryset = Subscription.objects.all()
+    permission_classes = [IsAuthenticated]
+
+    def post(self, request, *args, **kwargs):
+        user_id = request.data.get('user')
+        user = get_object_or_404(User, pk=user_id)
+        course_id = request.data.get('course')
+        course_item = get_object_or_404(Course, pk=course_id)
+
+        obj = user.subscriptions.filter(course__pk=course_id)
+
+        if obj.exists():
+            message = "Подписка отключена"
+            obj.delete()
+
+        else:
+            message = "Подписка оформлена"
+            Subscription.objects.create(user=user, course=course_item)
+
+        return Response({"message": message})
 
 
+class SubscriptionRetrieveApiView(generics.RetrieveAPIView):
+    serializer_class = SubscriptionSerializer
+    queryset = Subscription.objects.all()
+    permission_classes = [IsAuthenticated]
+
+
+class SubscriptionUpdateApiView(generics.UpdateAPIView):
+    serializer_class = SubscriptionSerializer
+    queryset = Subscription.objects.all()
+    permission_classes = [IsAuthenticated]
+
+
+class SubscriptionDestroyApiView(generics.DestroyAPIView):
+    serializer_class = SubscriptionSerializer
+    queryset = Subscription.objects.all()
+    permission_classes = [IsAuthenticated]

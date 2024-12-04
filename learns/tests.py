@@ -1,21 +1,22 @@
 from rest_framework import status
 from rest_framework.test import APITestCase
 
-from learns.models import Course, Lesson
+from learns.models import Course, Lesson, Subscription
 from users.models import User
 
 
 class CourseTestCase(APITestCase):
+    user = None
 
     def setUp(self):
-        user = User.objects.create(
+        self.user = User.objects.create(
             password='test_user',
             username="test_user",
             email="test_user@mail.ru",
             phone='12345',
             city='TestCity',
         )
-        self.client.force_authenticate(user=user)
+        self.client.force_authenticate(user=self.user)
 
     def test_create_course(self):
 
@@ -34,8 +35,9 @@ class CourseTestCase(APITestCase):
 
         self.assertEqual(
             response.json(),
-            {"id": 1, 'total_lessons': 0, 'lessons': [], 'title': 'TestCourse', 'preview': None, 'description': None,
-             'owner': 1}
+            {'id': 1, 'total_lessons': 0, 'lessons': [], 'is_subscribed': False, 'subscribers': [],
+             'title': 'TestCourse', 'preview': None, 'description': None, 'owner': self.user.id}
+
         )
 
         self.assertEqual(
@@ -67,29 +69,24 @@ class CourseTestCase(APITestCase):
             3
         )
 
-    def test_destroy_course(self):
-        pass
-
-    def test_update_course(self):
-        pass
-
 
 class LessonTestCase(APITestCase):
     course = None
+    user = None
 
     def setUp(self):
         self.course = Course.objects.create(
             title="ForTestCourse"
         )
 
-        user = User.objects.create(
+        self.user = User.objects.create(
             password='test_user',
             username="test_user",
             email="test_user@mail.ru",
             phone='12345',
             city='TestCity',
         )
-        self.client.force_authenticate(user=user)
+        self.client.force_authenticate(user=self.user)
 
     def test_create_lesson(self):
 
@@ -104,12 +101,13 @@ class LessonTestCase(APITestCase):
             data=data,
         )
 
+
         self.assertTrue(Course.objects.all().exists())
 
         self.assertEqual(
             response.json(),
             {'id': 1, 'title': 'TestLesson', 'description': None, 'preview': None,
-             'video_link': 'www.youtube.com/asdaw3125dsfas21', 'course': 5, 'owner': 5}
+             'video_link': 'www.youtube.com/asdaw3125dsfas21', 'course': self.course.id, 'owner': self.user.id}
         )
 
     def test_list_lesson(self):
@@ -207,3 +205,45 @@ class LessonTestCase(APITestCase):
             get_query.json(),
             response.json())
 
+
+class SubscriptionTestCase(APITestCase):
+    course = None
+    user = None
+
+    def setUp(self):
+        self.course = Course.objects.create(
+            title="ForTestCourse"
+        )
+
+        self.user = User.objects.create(
+            password='test_user',
+            username="test_user",
+            email="test_user@mail.ru",
+            phone='12345',
+            city='TestCity',
+        )
+        self.client.force_authenticate(user=self.user)
+
+    def test_sub_swich(self):
+        data = {
+            "course": self.course.id,
+            "user": self.user.id
+        }
+
+        self.client.post(
+            path="/subs/create/",
+            data=data
+        )
+
+        self.assertTrue(
+            Subscription.objects.filter(course__pk=self.course.pk).exists()
+        )
+
+        self.client.post(
+            path="/subs/create/",
+            data=data
+        )
+
+        self.assertFalse(
+            Subscription.objects.filter(course__pk=self.course.pk).exists()
+        )

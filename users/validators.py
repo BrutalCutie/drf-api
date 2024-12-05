@@ -11,4 +11,4 @@ class PaymentValidator:
         tmp = [values.get(x) for x in self.fields]
 
         if not any(tmp):
-            raise ValidationError("Вы должны выбрать либо урок, либо курс, за который последует оплата")
+            raise ValidationError("Вы должны выбрать либо lesson, либо course, за который последует оплата")

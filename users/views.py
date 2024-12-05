@@ -5,6 +5,7 @@ from rest_framework.permissions import IsAuthenticated, AllowAny
 
 from .models import User, Payment
 from .serializers import UserSerializer, PaymentSerializer, UserDetailSerializer
+from .services import create_session, create_product, create_stripe_price
 
 
 class UserViewSet(viewsets.ModelViewSet):
@@ -39,3 +40,16 @@ class PaymentViewSet(viewsets.ModelViewSet):
     ordering_fields = ("payment_date",)
     filterset_fields = ("payment_method", "course", "lesson",)
     permission_classes = [IsAuthenticated]
+
+
+    def perform_create(self, serializer):
+        payment = serializer.save(user=self.request.user)
+        creation_item = create_product(payment.lesson or payment.course)
+        amount = create_stripe_price(payment.payment_sum, creation_item)
+
+        session_id, payment_link = create_session(amount)
+        payment.payment_link = payment_link
+        payment.session_id = session_id
+
+        payment.save()
+

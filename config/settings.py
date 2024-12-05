@@ -134,3 +134,4 @@ MEDIA_ROOT = os.path.join(BASE_DIR, MEDIA_URL[1:-1])  # Передача пап�
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
+STRIPE_API_KEY = os.getenv('STRIPE_API_KEY')

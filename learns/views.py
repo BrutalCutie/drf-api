@@ -7,6 +7,7 @@ from rest_framework.response import Response
 from learns.models import Course, Lesson, Subscription
 from learns.paginators import LessonPagination, CoursePagination
 from learns.serializers import CourseSerializer, LessonSerializer, SubscriptionSerializer
+from learns.tasks import send_notification
 from users.models import User
 
 from users.permissions import IsModer, IsOwner
@@ -22,6 +23,12 @@ class CourseViewSet(viewsets.ModelViewSet):
         course = serializer.save()
         course.owner = self.request.user
         course.save()
+
+    def perform_update(self, serializer):
+        course = serializer.save()
+        course_pk = course.pk
+
+        send_notification.delay(course_pk)
 
     def get_permissions(self):
         if self.action in ['retrieve', 'update', 'partial_update']:

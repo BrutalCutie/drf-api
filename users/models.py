@@ -26,29 +26,34 @@ class Payment(models.Model):
         ("ACCOUNT", "Перевод на счёт"),
     ]
 
-    user = models.ForeignKey(User,
-                             on_delete=models.SET_NULL,
-                             related_name='payments',
-                             verbose_name="пользователь",
-                             blank=True, null=True)
+    user = models.ForeignKey(
+        User,
+        on_delete=models.SET_NULL,
+        related_name="payments",
+        verbose_name="пользователь",
+        blank=True,
+        null=True,
+    )
 
-    payment_date = models.DateField(verbose_name='дата платежа',
-                                    auto_now_add=True)
-    course = models.ForeignKey(Course,
-                               on_delete=models.CASCADE,
-                               related_name='payment_courses',
-                               null=True, blank=True)
-    lesson = models.ForeignKey(Lesson,
-                               on_delete=models.CASCADE,
-                               related_name='payment_lessons',
-                               null=True, blank=True)
+    payment_date = models.DateField(verbose_name="дата платежа", auto_now_add=True)
+    course = models.ForeignKey(
+        Course,
+        on_delete=models.CASCADE,
+        related_name="payment_courses",
+        null=True,
+        blank=True,
+    )
+    lesson = models.ForeignKey(
+        Lesson,
+        on_delete=models.CASCADE,
+        related_name="payment_lessons",
+        null=True,
+        blank=True,
+    )
     payment_sum = models.PositiveIntegerField(verbose_name="Сумма оплаты")
     payment_method = models.CharField(choices=PAYMENT_METHOD_CHOICES, verbose_name="Метод оплаты")
-    payment_link = models.CharField(max_length=500,
-                                    verbose_name="Ссылка на оплату",
-                                    blank=True, null=True)
-    session_id = models.CharField(verbose_name="id сессии",
-                                  blank=True, null=True)
+    payment_link = models.CharField(max_length=500, verbose_name="Ссылка на оплату", blank=True, null=True)
+    session_id = models.CharField(verbose_name="id сессии", blank=True, null=True)
 
     def __str__(self):
         return f"pk: {self.pk} | user pk: {self.user.pk}"

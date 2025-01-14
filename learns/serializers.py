@@ -17,7 +17,7 @@ class LessonSerializer(serializers.ModelSerializer):
         model = Lesson
         fields = "__all__"
         validators = [
-            LessonValidator(field='video_link'),
+            LessonValidator(field="video_link"),
         ]
 
 
@@ -25,7 +25,7 @@ class CourseSerializer(serializers.ModelSerializer):
     total_lessons = serializers.SerializerMethodField()
     lessons = LessonSerializer(many=True, read_only=True)
     is_subscribed = serializers.SerializerMethodField()
-    subscribers = SubscriptionSerializer(many=True, read_only=True, source='subscriptions')
+    subscribers = SubscriptionSerializer(many=True, read_only=True, source="subscriptions")
 
     class Meta:
         model = Course

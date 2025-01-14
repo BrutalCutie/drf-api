@@ -23,8 +23,8 @@ def send_notification(course_pk):
     if not users_to_notify:
         return None
 
-    subject = 'Здравствуй, {first_name} {last_name}!'
-    text = f'Курс {course.title} был обновлён.\n\nЭто сообщение пришло потому, что вы подписаны на обновление курса.'
+    subject = "Здравствуй, {first_name} {last_name}!"
+    text = f"Курс {course.title} был обновлён.\n\nЭто сообщение пришло потому, что вы подписаны на обновление курса."
 
     for user in users_to_notify:
         send_mail(
@@ -34,13 +34,15 @@ def send_notification(course_pk):
             ),
             message=text,
             from_email=EMAIL_HOST_USER,
-            recipient_list=[user.email,]
+            recipient_list=[
+                user.email,
+            ],
         )
 
 
 @shared_task
 def get_sleepy_guy():
-    all_users = User.objects.exclude(username='admin')
+    all_users = User.objects.exclude(username="admin")
     now = datetime.datetime.now()
 
     report_list = []
@@ -60,7 +62,3 @@ def get_sleepy_guy():
     print(f"Остановленных пользователей: {len(report_list)}")
     if len(report_list) > 0:
         print(f"Данные: {', '.join(report_list)}")
-
-
-
-

@@ -8,11 +8,10 @@ from users.views import UserViewSet, PaymentViewSet
 app_name = UsersConfig.name
 
 router = DefaultRouter()
-router.register('users', UserViewSet, basename='users')
-router.register('payments', PaymentViewSet, basename='payments')
+router.register("users", UserViewSet, basename="users")
+router.register("payments", PaymentViewSet, basename="payments")
 
 urlpatterns = [
-    path("users/token/", TokenObtainPairView.as_view(), name='token-obtain-pair'),
-    path("users/token/refresh/", TokenRefreshView.as_view(), name='token-obtain-refresh')
-
+    path("users/token/", TokenObtainPairView.as_view(), name="token-obtain-pair"),
+    path("users/token/refresh/", TokenRefreshView.as_view(), name="token-obtain-refresh"),
 ] + router.urls

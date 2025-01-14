@@ -23,8 +23,30 @@ eventlet = "^0.38.0"
 django-celery-beat = "^2.7.0"
 gunicorn = "^23.0.0"
 psycopg2-binary = "^2.9.10"
+flake8 = "^7.1.1"
+black = "^24.10.0"
 
 
 [build-system]
 requires = ["poetry-core"]
 build-backend = "poetry.core.masonry.api"
+
+[tool.black]
+line-length = 119
+exclude = '''
+(
+  /(
+      \.eggs
+    | \.git
+    | \.hg
+    | \.mypy_cache
+    | \.tox
+    | \.venv
+    | dist
+    | migrations
+  )/
+  | foo.py
+
+)
+'''
+

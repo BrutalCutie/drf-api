@@ -12,18 +12,18 @@ class UserViewSet(viewsets.ModelViewSet):
     serializer_class = UserSerializer
     queryset = User.objects.all()
     filter_backends = [DjangoFilterBackend, OrderingFilter]
-    filterset_fields = ('username', 'first_name', "email")
-    ordering_fields = ('last_login', 'email', 'username', 'first_name', "city")
+    filterset_fields = ("username", "first_name", "email")
+    ordering_fields = ("last_login", "email", "username", "first_name", "city")
     permission_classes = [IsAuthenticated]
 
     def get_permissions(self):
-        if self.action == 'create':
+        if self.action == "create":
             self.permission_classes = [AllowAny]
 
         return super().get_permissions()
 
     def get_serializer_class(self):
-        if self.action == 'retrieve':
+        if self.action == "retrieve":
             return UserDetailSerializer
         return UserSerializer
 
@@ -38,9 +38,12 @@ class PaymentViewSet(viewsets.ModelViewSet):
     queryset = Payment.objects.all()
     filter_backends = [OrderingFilter, DjangoFilterBackend]
     ordering_fields = ("payment_date",)
-    filterset_fields = ("payment_method", "course", "lesson",)
+    filterset_fields = (
+        "payment_method",
+        "course",
+        "lesson",
+    )
     permission_classes = [IsAuthenticated]
-
 
     def perform_create(self, serializer):
         payment = serializer.save(user=self.request.user)
@@ -52,4 +55,3 @@ class PaymentViewSet(viewsets.ModelViewSet):
         payment.session_id = session_id
 
         payment.save()
-

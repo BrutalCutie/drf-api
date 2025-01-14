@@ -13,11 +13,10 @@ class UserSerializer(serializers.ModelSerializer):
 class PaymentSerializer(serializers.ModelSerializer):
     class Meta:
         model = Payment
-        fields = '__all__'
+        fields = "__all__"
         validators = [
-            PaymentValidator(fields=['lesson', 'course']),
+            PaymentValidator(fields=["lesson", "course"]),
         ]
-
 
 
 class UserDetailSerializer(serializers.ModelSerializer):

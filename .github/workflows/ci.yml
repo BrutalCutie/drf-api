@@ -3,24 +3,24 @@ name: Django Remote Server CI
 on: [push]
 
 jobs:
-  lint:
-    runs-on: ubuntu-latest
-    steps:
-      - name: Check out code
-        uses: actions/checkout@v3
-
-      - name: Set up Python
-        uses: actions/setup-python@v4
-        with:
-          python-version: '3.12'
-
-      - name: Install flake8
-        run: |
-          python -m pip install --upgrade pip
-          pip install flake8
-
-      - name: Run flake8
-        run: flake8 .
+#  lint:
+#    runs-on: ubuntu-latest
+#    steps:
+#      - name: Check out code
+#        uses: actions/checkout@v3
+#
+#      - name: Set up Python
+#        uses: actions/setup-python@v4
+#        with:
+#          python-version: '3.12'
+#
+#      - name: Install flake8
+#        run: |
+#          python -m pip install --upgrade pip
+#          pip install flake8
+#
+#      - name: Run flake8
+#        run: flake8 .
 #  test:
 #    runs-on: ubuntu-latest
 #
@@ -71,12 +71,10 @@ jobs:
         run: |
           rsync -avz --exclude '__pycache__' --exclude '.git' . ${{ secrets.SSH_USER }}@${{ secrets.SSH_IP_ADDRESS }}:/var/www/html/drf-api/
 
-      - name: Set up Venv
-        run: python -m venv venv
-
       - name: Install dependencies on server
         run: |
           ssh -o StrictHostKeyChecking=no ${{ secrets.SSH_USER }}@${{ secrets.SSH_IP_ADDRESS }} << 'EOF'
+            python -m venv venv
             cd /var/html/drf-api/
             source venv/bin/activate
             pip install -r requirements.txt

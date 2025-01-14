@@ -62,9 +62,9 @@ jobs:
           ssh-private-key: ${{ secrets.SSH_KEY }}
           log-public-key: true
 
-      - name: Test server connection
-        run: |
-          ssh -o StrictHostKeyChecking=no ${{ secrets.SSH_USER }}@${{ secrets.SSH_IP_ADDRESS }}
+#      - name: Test server connection
+#        run: |
+#          ssh -o StrictHostKeyChecking=no ${{ secrets.SSH_USER }}@${{ secrets.SSH_IP_ADDRESS }}
 
       - name: Copy project files to server
         run: |

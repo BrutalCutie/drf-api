@@ -53,6 +53,7 @@ jobs:
 #      run: python manage.py test
 
   deploy:
+    needs: lint
     runs-on: ubuntu-latest
     steps:
       - name: Set up SSH

@@ -65,7 +65,6 @@ jobs:
       - name: Test server connection
         run: |
           ssh -o StrictHostKeyChecking=no ${{ secrets.SSH_USER }}@${{ secrets.SSH_IP_ADDRESS }} << 'EOF'
-            mkdir ${{ secrets.WORK_DIR }}
           EOF
 
       - name: Copy project files to server

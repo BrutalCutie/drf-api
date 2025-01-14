@@ -64,15 +64,16 @@ jobs:
         with:
           ssh-private-key: ${{ secrets.SSH_KEY }}
           log-public-key: true
-
-      - name: Test server connection
-        run: |
-          ssh -o StrictHostKeyChecking=no ${{ secrets.SSH_USER }}@${{ secrets.SSH_IP_ADDRESS }} << 'EOF'
-          EOF
+#
+#      - name: Test server connection
+#        run: |
+#          ssh -o StrictHostKeyChecking=no ${{ secrets.SSH_USER }}@${{ secrets.SSH_IP_ADDRESS }}
 
       - name: Copy project files to server
         run: |
-          rsync -avz --exclude '__pycache__' --exclude '.git' . ${{ secrets.SSH_USER }}@${{ secrets.SSH_IP_ADDRESS }}:${{ secrets.WORK_DIR }}
+          ssh -o StrictHostKeyChecking=no ${{ secrets.SSH_USER }}@${{ secrets.SSH_IP_ADDRESS }} << 'EOF'
+            rsync -avz --exclude '__pycache__' --exclude '.git' . ${{ secrets.SSH_USER }}@${{ secrets.SSH_IP_ADDRESS }}:${{ secrets.WORK_DIR }}
+          EOF
 
       - name: Install dependencies on server
         run: |

@@ -75,8 +75,13 @@ jobs:
       - name: Install dependencies on server
         run: |
           ssh -o StrictHostKeyChecking=no ${{ secrets.SSH_USER }}@${{ secrets.SSH_IP_ADDRESS }} << 'EOF'
+            echo before cd
+            pwd
             cd /var/www/html/drf-api/
+            echo after cd
+            pwd
             python -m venv venv
+            echo after venv
             pwd
             source venv/bin/activate
             pip install -r requirements.txt

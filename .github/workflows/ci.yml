@@ -68,7 +68,7 @@ jobs:
 
       - name: Copy project files to server
         run: |
-          rsync -avz --exclude '__pycache__' --exclude '.git' . ${{ secrets.SSH_USER }}@${{ secrets.SSH_IP_ADDRESS }}:/var/www/html/drf-api/
+          rsync -avz --exclude '__pycache__' --exclude '.git' . root@77.232.138.209:/var/www/html/drf-api/
 
       - name: Install dependencies on server
         run: |

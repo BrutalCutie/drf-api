@@ -65,13 +65,12 @@ jobs:
 
       - name: Test server connection
         run: |
-          ssh -o StrictHostKeyChecking=no ${{ secrets.SSH_USER }}@${{ secrets.SSH_IP_ADDRESS }} << 'EOF'
-          echo lol
-          EOF
+          ssh -o StrictHostKeyChecking=no ${{ secrets.SSH_USER }}@${{ secrets.SSH_IP_ADDRESS }}
 
       - name: Copy project files to server
         run: |
-          rsync -avz --exclude '__pycache__' --exclude '.git' . ${{ secrets.SSH_USER }}@${{ secrets.SSH_IP_ADDRESS }}:${{ secrets.WORK_DIR }}
+          rsync -avz --exclude '__pycache__' --exclude '.git' . ${{ secrets.SSH_USER }}@${{ secrets.SSH_IP_ADDRESS }}: /var/www/html/drf-api/
+#          rsync -avz --exclude '__pycache__' --exclude '.git' . ${{ secrets.SSH_USER }}@${{ secrets.SSH_IP_ADDRESS }}:${{ secrets.WORK_DIR }}
 
       - name: Set up Venv
         run: python -m venv venv
@@ -79,7 +78,8 @@ jobs:
       - name: Install dependencies on server
         run: |
           ssh -o StrictHostKeyChecking=no ${{ secrets.SSH_USER }}@${{ secrets.SSH_IP_ADDRESS }} << 'EOF'
-            cd ${{ secrets.WORK_DIR }}
+#            cd ${{ secrets.WORK_DIR }}
+            cd /var/html/drf-api/
             source venv/bin/activate
             pip install -r requirements.txt
           EOF

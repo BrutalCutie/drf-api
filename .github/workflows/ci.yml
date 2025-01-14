@@ -62,20 +62,20 @@ jobs:
           ssh-private-key: ${{ secrets.SSH_KEY }}
           log-public-key: true
 
-#      - name: Test server connection
-#        run: |
-#          ssh -o StrictHostKeyChecking=no ${{ secrets.SSH_USER }}@${{ secrets.SSH_IP_ADDRESS }}
+      - name: Test server connection
+        run: |
+          ssh -o StrictHostKeyChecking=no ${{ secrets.SSH_USER }}@${{ secrets.SSH_IP_ADDRESS }}
 
       - name: Copy project files to server
         run: |
           rsync -avz --exclude '__pycache__' --exclude '.git' . root@77.232.138.209:/var/www/html/drf-api/
-          ls -la
+          pwd
 
       - name: Install dependencies on server
         run: |
           ssh -o StrictHostKeyChecking=no ${{ secrets.SSH_USER }}@${{ secrets.SSH_IP_ADDRESS }} << 'EOF'
             python -m venv venv
-            ls -la
+            pwd
             cd /var/www/html/drf-api/
             source venv/bin/activate
             pip install -r requirements.txt

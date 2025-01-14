@@ -26,7 +26,12 @@ jobs:
     needs: lint
     services:
       db:
-        image: postgres:16
+        image: postgres:16-alpine
+        env:
+          POSTGRES_HOST: 'localhost'
+          POSTGRES_DB: 'myproject'
+          POSTGRES_USER: 'postgres'
+          POSTGRES_PASSWORD: '156489198515'
         ports:
           - 5432:5432
         options: >-

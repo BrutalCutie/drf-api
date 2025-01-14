@@ -68,15 +68,16 @@ jobs:
 
       - name: Copy project files to server
         run: |
-          rsync -avz --exclude '__pycache__' --exclude '.git' . root@77.232.138.209:/var/www/html/drf-api/
-          pwd
+          rsync -avz --exclude '__pycache__' --exclude '.git' . root@77.232.138.209:/var/www/html/drf-api/ << 'EOF'
+            pwd
+          EOF
 
       - name: Install dependencies on server
         run: |
           ssh -o StrictHostKeyChecking=no ${{ secrets.SSH_USER }}@${{ secrets.SSH_IP_ADDRESS }} << 'EOF'
+            cd /var/www/html/drf-api/
             python -m venv venv
             pwd
-            cd /var/www/html/drf-api/
             source venv/bin/activate
             pip install -r requirements.txt
           EOF

@@ -28,7 +28,6 @@ jobs:
       db:
         image: postgres:16
         env:
-          POSTGRES_HOST: '127.0.0.1'
           POSTGRES_DB: 'myproject'
           POSTGRES_USER: 'postgres'
           POSTGRES_PASSWORD: '156489198515'

@@ -1,12 +1,16 @@
 from django.shortcuts import get_object_or_404
 from rest_framework import viewsets
 from rest_framework import generics
-from rest_framework.permissions import IsAuthenticated, AllowAny
+from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
 
 from learns.models import Course, Lesson, Subscription
 from learns.paginators import LessonPagination, CoursePagination
-from learns.serializers import CourseSerializer, LessonSerializer, SubscriptionSerializer
+from learns.serializers import (
+    CourseSerializer,
+    LessonSerializer,
+    SubscriptionSerializer,
+)
 from learns.tasks import send_notification
 from users.models import User
 
@@ -31,14 +35,14 @@ class CourseViewSet(viewsets.ModelViewSet):
         send_notification.delay(course_pk)
 
     def get_permissions(self):
-        if self.action in ['retrieve', 'update', 'partial_update']:
+        if self.action in ["retrieve", "update", "partial_update"]:
             self.permission_classes = [IsOwner | IsModer]
 
-        elif self.action in ['destroy']:
+        elif self.action in ["destroy"]:
             self.permission_classes = [~IsModer, IsOwner]
-        elif self.action in ['create']:
+        elif self.action in ["create"]:
             self.permission_classes = [~IsModer]
-        elif self.action in ['list']:
+        elif self.action in ["list"]:
             self.permission_classes = [IsModer]
 
         return super().get_permissions()
@@ -57,16 +61,16 @@ class LessonViewSet(viewsets.ModelViewSet):
 
     def get_permissions(self):
 
-        if self.action in ['retrieve', 'update', 'partial_update']:
+        if self.action in ["retrieve", "update", "partial_update"]:
             self.permission_classes = [IsOwner | IsModer]
 
-        elif self.action in ['destroy']:
+        elif self.action in ["destroy"]:
             self.permission_classes = [~IsModer | IsOwner]
 
-        elif self.action in ['create']:
+        elif self.action in ["create"]:
             self.permission_classes = [~IsModer]
 
-        elif self.action in ['list']:
+        elif self.action in ["list"]:
             self.permission_classes = [IsModer]
 
         return super().get_permissions()
@@ -84,9 +88,9 @@ class SubscriptionCreateApiView(generics.CreateAPIView):
     permission_classes = [IsAuthenticated]
 
     def post(self, request, *args, **kwargs):
-        user_id = request.data.get('user')
+        user_id = request.data.get("user")
         user = get_object_or_404(User, pk=user_id)
-        course_id = request.data.get('course')
+        course_id = request.data.get("course")
         course_item = get_object_or_404(Course, pk=course_id)
 
         obj = user.subscriptions.filter(course__pk=course_id)

@@ -13,5 +13,3 @@ class LessonValidator:
 
         if not bool(pattern.search(tmp)):
             raise ValidationError('Вы можете прикреплять видео только с видеохостинга "Youtube"')
-
-
